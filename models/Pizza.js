@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose'); // import dependencies. Schema constructor and model function
 const moment = require('moment');
 
-
 const PizzaSchema = new Schema(
     {
         pizzaName: {
@@ -39,7 +38,7 @@ const PizzaSchema = new Schema(
 
 // get total count of comments and replies on retrieval
 PizzaSchema.virtual('commentCount').get(function () {
-    return this.comments.length;
+    return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 });
 
 // create the Pizza model using the PizzaSchema
